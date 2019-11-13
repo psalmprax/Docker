@@ -1,0 +1,56 @@
+version: '3'
+
+volumes:
+  production_traefik: {}
+  media: {}
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+    image: 488383679835.dkr.ecr.eu-central-1.amazonaws.com/deploy_production_django
+    volumes:
+      - media:/app/aicore/media
+      #- media:/app/computation_server/media
+    depends_on:
+      #- postgres
+      - redis
+    env_file:
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
+    command: /start
+
+  traefik:
+    build:
+      context: .
+      dockerfile: ./compose/production/traefik/Dockerfile
+    image: 488383679835.dkr.ecr.eu-central-1.amazonaws.com/deploy_production_traefik
+    depends_on:
+      - django
+    volumes:
+      - production_traefik:/etc/traefik/acme
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+
+  redis:
+    image: redis:5.0
+
+  celeryworker:
+    <<: *django
+    image: 488383679835.dkr.ecr.eu-central-1.amazonaws.com/deploy_production_celeryworker
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: 488383679835.dkr.ecr.eu-central-1.amazonaws.com/deploy_production_celerybeat
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: 488383679835.dkr.ecr.eu-central-1.amazonaws.com/deploy_production_flower
+    ports:
+      - "5555:5555"
+    command: /start-flower
+
+  

@@ -1,0 +1,44 @@
+# General
+# ------------------------------------------------------------------------------
+# DJANGO_READ_DOT_ENV_FILE=True
+DJANGO_SETTINGS_MODULE=config.settings.production
+DJANGO_SECRET_KEY=gFD3FDxI4oh3THqcL7CPawNCFhYGlzQbcL5i5w28atBuk20EqNfJT9YaUctlbN3O
+DJANGO_ADMIN_URL=MWdGc80nKcTjKewcIYTpZD8VZYlAor9w/
+DJANGO_ALLOWED_HOSTS=.aic.compredict.de,.localhost,.ec2-3-124-125-142.eu-central-1.compute.amazonaws.com
+
+# Security
+# ------------------------------------------------------------------------------
+# TIP: better off using DNS, however, redirect is OK too
+DJANGO_SECURE_SSL_REDIRECT=False
+
+# Email
+# ------------------------------------------------------------------------------
+MAILGUN_API_KEY=
+DJANGO_SERVER_EMAIL=
+MAILGUN_DOMAIN=
+
+# django-allauth
+# ------------------------------------------------------------------------------
+DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
+
+# Gunicorn
+# ------------------------------------------------------------------------------
+WEB_CONCURRENCY=4
+
+# Sentry
+# ------------------------------------------------------------------------------
+SENTRY_DSN=
+
+
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+#REDIS_URL=redis://redis-test.kosulx.ng.0001.euc1.cache.amazonaws.com:6379
+#REDIS_URL=redis-test-001.kosulx.0001.euc1.cache.amazonaws.com
+# Celery
+# ------------------------------------------------------------------------------
+
+# Flower
+CELERY_FLOWER_USER=debug
+CELERY_FLOWER_PASSWORD=debug
+
